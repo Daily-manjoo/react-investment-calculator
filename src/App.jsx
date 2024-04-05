@@ -11,11 +11,13 @@ function App() {
     duration: 10,
   });
 
+  const inputIsValid = userInput.duration >= 1;
+
   function handleChange(inputIdentifier, newValue) {
     setUserInput((prevUserInput) => {
       return {
         ...prevUserInput,
-        [inputIdentifier]: newValue,
+        [inputIdentifier]: +newValue, //문자열 값을 숫자열로 반환할 것을 강제
       };
     });
   }
@@ -24,7 +26,10 @@ function App() {
     <>
       <Header />
       <InputBox userInput={userInput} onChange={handleChange} />
-      <Results input={userInput} />
+      {!inputIsValid && (
+        <p className="center">기간을 1년 이상으로 입력해주세요.</p>
+      )}
+      {inputIsValid && <Results input={userInput} />}
     </>
   );
 }
